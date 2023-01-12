@@ -163,6 +163,7 @@ public class SocksServiceImpl implements SocksService {
             fileService.saveFileSocks(json);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Произошла ошибка при сохранении файла!");
         }
     }
 
@@ -175,6 +176,7 @@ public class SocksServiceImpl implements SocksService {
             socksMap = socksFile.getSocksFileMap();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Произошла ошибка при чтении файла!");
         }
     }
 

@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -28,6 +29,7 @@ public class FileServiceImpl implements FileService {
             Files.writeString(Path.of(pathFile, nameSocksFile), json);
         } catch (IOException e) {
             e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Произошла ошибка при сохранении файла!");
         }
     }
 
@@ -36,7 +38,7 @@ public class FileServiceImpl implements FileService {
         try {
             return Files.readString(Path.of(pathFile, nameSocksFile));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Произошла ошибка при чтении файла!");
         }
     }
 
@@ -50,7 +52,7 @@ public class FileServiceImpl implements FileService {
         try {
             return Files.createTempFile(Path.of(pathFile), "tempFile", suffix);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Произошла ошибка при создании временного файла!");
         }
     }
 
